@@ -72,6 +72,23 @@ plop-deploy --path ./my-site --subdomain my-demo --public
 The CLI always prints the resolved visibility after deploying so it's never a
 surprise.
 
+## Updating an existing site
+
+To update a deployment, deploy again with the **same `--subdomain`**. The
+content is swapped atomically (no downtime), and `created_by` / `created_at` are
+preserved.
+
+> ⚠️ **Options are applied in full on every deploy — they are not remembered
+> from the previous one.** The CLI always sends an auth mode (default `sevaro`)
+> and SPA-fallback (default on), so a redeploy **without** `--public` flips a
+> previously-public site back to private. Re-pass the flags you want each time:
+>
+> ```bash
+> plop-deploy --path ./dist --subdomain my-demo --public
+> ```
+
+You can only update a site **you own** (you created it) — or as an admin.
+
 ## Options
 
 | Flag | Default | Description |
