@@ -1,0 +1,39 @@
+{
+  "name": "@sevaro/plop-deploy",
+  "version": "0.1.1",
+  "description": "Deploy a folder, zip, PDF, or HTML file to plop from the terminal — owned by the user who runs it.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SevaroHealth/plop-cli.git"
+  },
+  "homepage": "https://github.com/SevaroHealth/plop-cli#readme",
+  "bugs": {
+    "url": "https://github.com/SevaroHealth/plop-cli/issues"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "plop-deploy": "./plop-deploy.mjs"
+  },
+  "files": [
+    "plop-deploy.mjs",
+    "lib",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "build:binaries": "node scripts/build-binaries.mjs"
+  },
+  "dependencies": {
+    "@azure/msal-node": "^3.8.1",
+    "archiver": "^7.0.1"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.5",
+    "vitest": "^4.1.5"
+  }
+}

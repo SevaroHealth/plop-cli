@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Test coverage
+coverage/
+
+# Logs / OS cruft
+*.log
+.DS_Store
+
+# Local env
+.env
+.env.*
+!.env.example

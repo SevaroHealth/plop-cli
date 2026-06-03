@@ -1,0 +1,47 @@
+name: release-cli
+
+# Tag a release as cli-vX.Y.Z to build + publish the plop-deploy binaries.
+on:
+  push:
+    tags: ["cli-v*"]
+
+permissions:
+  contents: write
+  # Free for PUBLIC repos: mint a keyless Sigstore-backed provenance attestation
+  # per binary. Verify with `gh attestation verify <binary> --repo <owner>/plop-cli`.
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    name: build + publish plop-deploy binaries
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      - run: npm ci
+      # Gate the release on the tests, then cross-compile all targets with Bun.
+      - run: npm run test:coverage
+      - run: node scripts/build-binaries.mjs
+      # Checksums let users verify a downloaded binary with `shasum -c`.
+      - name: Generate SHA256SUMS
+        run: |
+          cd dist
+          shasum -a 256 plop-deploy-* | tee SHA256SUMS
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: dist/plop-deploy-*
+      - name: Publish GitHub Release with binaries
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          files: |
+            dist/plop-deploy-*
+            dist/SHA256SUMS
+          generate_release_notes: true
+          fail_on_unmatched_files: true
