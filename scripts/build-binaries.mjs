@@ -11,12 +11,15 @@ import { fileURLToPath } from "node:url";
 
 const cliDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-// Targets we ship for the curl|bash installer (macOS + Linux, both arches).
+// Targets we ship for the installers (macOS + Linux both arches, Windows x64).
+// Bun has no windows-arm64 compile target; Windows-on-ARM runs the x64 build
+// under emulation.
 const TARGETS = {
   "darwin-arm64": "bun-darwin-arm64",
   "darwin-x64": "bun-darwin-x64",
   "linux-x64": "bun-linux-x64",
   "linux-arm64": "bun-linux-arm64",
+  "windows-x64": "bun-windows-x64",
 };
 
 const requested = process.argv.slice(2);
@@ -32,7 +35,8 @@ for (const name of names) {
     console.error(`Unknown target "${name}". Known: ${Object.keys(TARGETS).join(", ")}`);
     process.exit(1);
   }
-  const outfile = path.join(distDir, `plop-deploy-${name}`);
+  const ext = name.startsWith("windows") ? ".exe" : "";
+  const outfile = path.join(distDir, `plop-deploy-${name}${ext}`);
   console.log(`building ${path.relative(cliDir, outfile)} (${bunTarget})`);
   execFileSync(
     "bun",

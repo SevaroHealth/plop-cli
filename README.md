@@ -9,14 +9,23 @@ under your name, redeployable by you from the CLI or the dashboard).
 `plop-deploy` ships as a **self-contained native binary** — no Node or Bun
 required to run it.
 
+**macOS / Linux:**
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/SevaroHealth/plop-cli/main/install.sh | bash
 ```
 
-The installer detects your OS/arch (macOS/Linux, arm64/x64), downloads the
-matching binary from the latest GitHub Release, and drops `plop-deploy` in
-`~/.local/bin` (override with `PLOP_BIN_DIR`). Add that dir to your PATH if it
-isn't already.
+**Windows (PowerShell):**
+
+```powershell
+irm https://raw.githubusercontent.com/SevaroHealth/plop-cli/main/install.ps1 | iex
+```
+
+The installer detects your OS/arch (macOS/Linux arm64/x64, Windows x64),
+downloads the matching binary from the latest GitHub Release, and puts
+`plop-deploy` on your PATH — `~/.local/bin` on macOS/Linux,
+`%LOCALAPPDATA%\plop\bin` on Windows (override with `PLOP_BIN_DIR`). On Windows
+it also clears the binary's Mark-of-the-Web so SmartScreen doesn't flag it.
 
 You can also grab a binary straight from the
 [GitHub Releases](https://github.com/SevaroHealth/plop-cli/releases) (tagged
@@ -157,7 +166,7 @@ npm run build:binaries           # all targets → dist/plop-deploy-<os>-<arch>
 node scripts/build-binaries.mjs darwin-arm64   # a single target
 ```
 
-Targets: `darwin-arm64`, `darwin-x64`, `linux-x64`, `linux-arm64`.
+Targets: `darwin-arm64`, `darwin-x64`, `linux-x64`, `linux-arm64`, `windows-x64`.
 
 Releasing is automated: push a tag `cli-vX.Y.Z` and the `release-cli` GitHub
 Actions workflow runs the tests, cross-compiles, and publishes a GitHub Release
