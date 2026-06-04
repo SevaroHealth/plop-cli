@@ -22,9 +22,9 @@ Options:
 
 Sites are PRIVATE by default. Pass --public to publish a world-readable site.
 
-Updating a site: deploy again with the same --subdomain. Options are applied in
-full each time, NOT remembered — re-pass --public (and --spa-fallback false) or
-an existing site reverts to the defaults (private, SPA-fallback on).
+Updating a site: deploy again with the same --subdomain. Only the content is
+replaced — the site's visibility and SPA-fallback are preserved. Pass --public,
+--auth-mode, or --spa-fallback to change a setting.
 
 Sign-in opens your default browser (authorization code + PKCE). The token is
 cached, so later deploys refresh silently with no browser.

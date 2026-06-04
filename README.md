@@ -74,20 +74,23 @@ surprise.
 
 ## Updating an existing site
 
-To update a deployment, deploy again with the **same `--subdomain`**. The
-content is swapped atomically (no downtime), and `created_by` / `created_at` are
-preserved.
+To update a deployment, deploy again with the **same `--subdomain`**. Only the
+content is replaced (swapped atomically, no downtime) — the site's **visibility
+and SPA-fallback are preserved**, along with `created_by` / `created_at`:
 
-> ⚠️ **Options are applied in full on every deploy — they are not remembered
-> from the previous one.** The CLI always sends an auth mode (default `sevaro`)
-> and SPA-fallback (default on), so a redeploy **without** `--public` flips a
-> previously-public site back to private. Re-pass the flags you want each time:
->
-> ```bash
-> plop-deploy --path ./dist --subdomain my-demo --public
-> ```
+```bash
+plop-deploy --path ./dist --subdomain my-demo
+```
 
-You can only update a site **you own** (you created it) — or as an admin.
+To **change** a setting, pass the flag — it overrides the preserved value:
+
+```bash
+plop-deploy --path ./dist --subdomain my-demo --public   # make it public
+```
+
+The CLI reads your site's current settings from `GET /api/list?scope=mine`
+(owner-visible) to preserve anything you don't override. You can only update a
+site **you own** — or as an admin.
 
 ## Options
 

@@ -1,6 +1,6 @@
 {
   "name": "@sevaro/plop-deploy",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Deploy a folder, zip, PDF, or HTML file to plop from the terminal — owned by the user who runs it.",
   "type": "module",
   "repository": {
