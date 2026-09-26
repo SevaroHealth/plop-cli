@@ -29,7 +29,7 @@
     "build:binaries": "node scripts/build-binaries.mjs"
   },
   "dependencies": {
-    "@azure/msal-node": "^3.8.1",
+    "@azure/msal-node": "^7.0.0",
     "archiver": "^7.0.1"
   },
   "devDependencies": {
