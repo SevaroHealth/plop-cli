@@ -18,13 +18,18 @@ Options:
   --public               Make the site public (default: private, Sevaro login required)
   --auth-mode <mode>     public | sevaro   (default: sevaro)
   --spa-fallback <bool>  Route unknown paths to index.html (default: true)
+  --description <text>   Short description shown in the Directory (max 200; "" clears)
+  --listed               List the site in the Directory (needs --subdomain)
+  --unlisted             Remove the site from the Directory
   -h, --help             Show this help
 
 Sites are PRIVATE by default. Pass --public to publish a world-readable site.
 
 Updating a site: deploy again with the same --subdomain. Only the content is
 replaced — the site's visibility and SPA-fallback are preserved. Pass --public,
---auth-mode, or --spa-fallback to change a setting.
+--auth-mode, --spa-fallback, --description, --listed or --unlisted to change a
+setting. Directory listings are only for named (non-temporary) sites and are
+only shown to people who can already open the site.
 
 Sign-in opens your default browser (authorization code + PKCE). The token is
 cached, so later deploys refresh silently with no browser.
@@ -73,6 +78,8 @@ async function main() {
       subdomain: parsed.subdomain,
       authMode: parsed.authMode,
       spaFallback: parsed.spaFallback,
+      listed: parsed.listed,
+      description: parsed.description,
       filePath: artifact.filePath,
       filename: artifact.filename,
       contentType: artifact.contentType,

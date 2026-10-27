@@ -110,6 +110,8 @@ site **you own** — or as an admin.
 | `--public` | off | Publish a world-readable site (alias for `--auth-mode public`). |
 | `--auth-mode <mode>` | `sevaro` | `public` \| `sevaro`. (BYO OIDC is config-editor-only — the CLI can't supply OIDC config.) |
 | `--spa-fallback <bool>` | `true` | Route unknown paths to `index.html`. |
+| `--description <text>` | — | Short description shown in the Directory (max 200 characters; `""` clears it). |
+| `--listed` / `--unlisted` | — | Add or remove the site from the Directory. Needs `--subdomain`; only people who can open the site see it listed. |
 | `login` / `logout` | — | Sign in (cache the token) / forget it. |
 
 Max upload size is 75 MB (matches the backend).
